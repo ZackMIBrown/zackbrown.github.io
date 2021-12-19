@@ -51,6 +51,10 @@ class InputManager
         window.addEventListener( "mousedown", this.mouseDown);
         window.addEventListener( "mousemove", this.mouseMove);
         window.addEventListener( "mouseup",   this.mouseUp);
+        //
+        window.addEventListener( "touchstart", this.mouseDown);
+        window.addEventListener( "touchmove", this.mouseMove);
+        window.addEventListener( "touchend",   this.mouseUp);
     }
     mouseDown = event => 
     {
