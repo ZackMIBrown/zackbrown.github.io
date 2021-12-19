@@ -118,15 +118,18 @@ class InputManager
     }
     touchStart = event =>
     {
-        this.mouseDown(event);
+        event.preventDefault();
+        window.dispatchEvent(new Event('mousedown'))
     }
     touchMove = event =>
     {
-        this.mouseMove(event);
+        event.preventDefault();
+        window.dispatchEvent(new Event('mousemove'))
     }
     touchEnd = event =>
     {
-        this.mouseUp(event);
+        event.preventDefault();
+        window.dispatchEvent(new Event('mouseup'))
     }
     checkPlaneIntersection(aRay)
     {
