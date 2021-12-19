@@ -52,9 +52,26 @@ class InputManager
         window.addEventListener( "mousemove", this.mouseMove);
         window.addEventListener( "mouseup",   this.mouseUp);
         //
-        window.addEventListener( "touchstart", this.touchStart);
-        window.addEventListener( "touchmove",  this.touchMove);
-        window.addEventListener( "touchend",   this.touchEnd);
+        window.addEventListener("touchstart",  this.touchHandler, true);
+        window.addEventListener("touchmove",   this.touchHandler, true);
+        window.addEventListener("touchend",    this.touchHandler, true);
+        window.addEventListener("touchcancel", this.touchHandler, true);
+    }
+    touchHandler = event => 
+    {
+        var touches = event.changedTouches,
+            first = touches[0],
+            type = "";
+        switch(event.type)
+        {
+            case "touchstart": type = "mousedown"; break;
+            case "touchmove":  type = "mousemove"; break;        
+            case "touchend":   type = "mouseup";   break;
+            default:           return;
+        }
+        var simulatedEvent = new MouseEvent(type);
+        first.target.dispatchEvent(simulatedEvent);
+        event.preventDefault();
     }
     mouseDown = event => 
     {
