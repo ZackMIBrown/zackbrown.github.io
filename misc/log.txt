@@ -1,0 +1,47 @@
+void main()
+{
+    //float mask = smoothstep(0.3, 0.31, length(v_pos - v_intersectionPos));
+    
+    float mask = length(v_pos - v_mousePositions[0]);
+    float anotherMask;
+    
+    // for(int i = 1; i < 15; i++)
+    // {
+
+    //     anotherMask = length(v_pos - v_mousePositions[i]);
+    //     mask = smin(mask, anotherMask, 0.7); 
+    // }
+
+    mask = smoothstep(0.1, 0.11, mask);
+
+    vec4 texSample = texture(u_texture, vec2(v_texcoord.x, -v_texcoord.y));
+    vec3 col = texSample.xyz * mask + (1. - mask) * 2. * texSample.xyz * (vec3(1.) - texSample.xyz);
+    fragColor = vec4(col, 1.0);
+}`
+
+//---------------------------------------------------------------------------------
+
+void main()
+{
+    float minDomainDist = 3.0;
+    float maxDomainDist = 5.0;
+    float diffDomainDist = maxDomainDist - minDomainDist;
+    
+    float val = mix(3., maxDomainDist,  0.0 / 5.0) * length(v_pos - v_mousePositions[0]);;
+    float anotherVal;
+    
+    for(int i = 1; i < 20; i++)
+    {
+        float flI = float(i);
+        float index = flI / 10.;
+        float interpol = smoothstep(minDomainDist, maxDomainDist, minDomainDist + index * diffDomainDist);
+       
+        anotherVal = (minDomainDist + interpol * diffDomainDist) * length(v_pos - v_mousePositions[i]);
+        val = smin(val, anotherVal, 0.99);
+    }
+    float theMask = smoothstep(0.4, 0.41, val);
+    vec4 texSample = texture(u_texture, vec2(v_texcoord.x, -v_texcoord.y));
+    vec3 col = texSample.xyz * theMask + (1. - theMask) * 2. * texSample.xyz * (vec3(1.) - texSample.xyz);
+    fragColor = vec4(col,1.0);
+}`
+
