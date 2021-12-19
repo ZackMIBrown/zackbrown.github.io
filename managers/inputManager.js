@@ -70,7 +70,10 @@ class InputManager
             default:           return;
         }
         var simulatedEvent = new MouseEvent(type);
-        first.target.dispatchEvent(simulatedEvent);
+        //first.target.dispatchEvent(simulatedEvent);
+        // -webkit-touch-callout.
+        // https://stackoverflow.com/questions/1517924/javascript-mapping-touch-events-to-mouse-events
+        window.dispatchEvent(simulatedEvent);
         event.preventDefault();
     }
     mouseDown = event => 
