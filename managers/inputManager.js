@@ -52,9 +52,9 @@ class InputManager
         window.addEventListener( "mousemove", this.mouseMove);
         window.addEventListener( "mouseup",   this.mouseUp);
         //
-        window.addEventListener( "touchstart", this.mouseDown);
-        window.addEventListener( "touchmove", this.mouseMove);
-        window.addEventListener( "touchend",   this.mouseUp);
+        window.addEventListener( "touchstart", this.touchStart);
+        window.addEventListener( "touchmove",  this.touchMove);
+        window.addEventListener( "touchend",   this.touchEnd);
     }
     mouseDown = event => 
     {
@@ -115,6 +115,18 @@ class InputManager
             this.isSpinning = true;
             this.spinTimer = this.spinTimeLength;
         }
+    }
+    touchStart = event =>
+    {
+        this.mouseDown(event);
+    }
+    touchMove = event =>
+    {
+        this.mouseMove(event);
+    }
+    touchEnd = event =>
+    {
+        this.mouseUp(event);
     }
     checkPlaneIntersection(aRay)
     {
